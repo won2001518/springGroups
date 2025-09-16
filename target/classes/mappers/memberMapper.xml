@@ -15,10 +15,15 @@
 	</select>
 	
 	<select id="getMemberList" resultType="com.spring.springGroupS.vo.MemberVO">
-	 <!--  <if test="level == 99">select * from member order by mid limit #{startIndexNo},#{pageSize};</if>
-	  <if test="level != 99">select * from member where level=#{level} order by mid limit #{startIndexNo},#{pageSize};</if> -->
-
-	  select * from member <if test="level != 99"> where level=#{level} </if> order by mid limit #{startIndexNo},#{pageSize};
+	<!-- 
+	  <if test="level == 99">select * from member order by mid limit #{startIndexNo},#{pageSize};</if>
+	  <if test="level != 99">select * from member where level=#{level} order by mid limit #{startIndexNo},#{pageSize};</if>
+	 -->  
+	  select *, timestampdiff(day, lastDate, now()) as deleteDiff from member <if test="level != 99"> where level=#{level} </if> order by mid limit #{startIndexNo},#{pageSize};
+	</select>
+	
+	<select id="getTotRecCnt" resultType="int">
+	  select count(*) from member;
 	</select>
 	
 	

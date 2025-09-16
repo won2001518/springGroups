@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <jsp:include page="/WEB-INF/views/include/bs5.jsp" />
   <title>adminMain.jsp</title>
-  <frameset cols="160px, *">
+  <frameset cols="130px, *">
   	<frame src="${ctp}/admin/adminLeft" name="adminLeft" frameborder="0"/>
   	<frame src="${ctp}/admin/adminContent" name="adminContent" frameborder="0"/>
   </frameset>

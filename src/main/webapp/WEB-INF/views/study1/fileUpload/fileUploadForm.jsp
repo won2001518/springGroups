@@ -9,10 +9,10 @@
   <jsp:include page="/WEB-INF/views/include/bs5.jsp" />
   <title>fileUploadForm.jsp</title>
   <script>
-  	'use strict';
-  	
-  	function fCheck() {
-  		let fName = document.getElementById("fName").value;
+    'use strict';
+    
+    function fCheck() {
+    	let fName = document.getElementById("fName").value;
     	let maxSize = 1024 * 1024 * 20;	// 최대 20MByte
     	let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
     	
@@ -31,8 +31,7 @@
     	else {
     		myform.submit();
     	}
-	}
-  	
+    }
   </script>
 </head>
 <body>
@@ -44,8 +43,8 @@
   <hr/>
   <form name="myform" method="post" enctype="multipart/form-data">
     <div class="input-group mb-3">
-      <div class="input-group-text">올린이</div> 
-      	<input type="text" name="mid" value="admin" class="form-control" /> 
+      <div class="input-group-text">올린이</div>
+      <input type="text" name="mid" value="admin" class="form-control" />
     </div>
     <div class="input-group mb-3">
       <input type="file" name="fName" id="fName" class="form-control" accept=".jpg,.gif,.png,.zip,.ppt,.pptx,.hwp,.hwpx,.doc,.pdf,.txt"/>

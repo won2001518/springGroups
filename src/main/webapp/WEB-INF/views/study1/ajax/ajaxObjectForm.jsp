@@ -127,7 +127,7 @@
     	let str = "선택하신 지역은? " + dodo + " / " + city;
     	$("#demo2").html(str);
     }
-	
+    
     // 동기식 처리
     function midCheck1() {
     	let mid = document.getElementById("mid").value;
@@ -135,13 +135,14 @@
     	else myform4.submit();
     }
     
-    	//vo검색처리
+    // vo검색처리
     function midCheck2() {
     	let mid = document.getElementById("mid").value;
     	if(mid.trim() == "") {
     		alert("검색할 아이디를 입력하세요");
     		return false;
     	}
+    	
     	$.ajax({
     		url  : "${ctp}/study1/ajax/ajaxObject5",
     		type : "post",
@@ -160,7 +161,8 @@
     		error : () => alert("전송오류")
     	});
     }
-    //vos검색(완전일치)
+    
+    // vos검색(완전일치)
     function midCheck3() {
     	let mid = document.getElementById("mid").value;
     	if(mid.trim() == "") {
@@ -176,27 +178,27 @@
     			//console.log(res);
     			//$("#demo1").html(res);
     			let str = '';
-    			str += '<table class=" table table-hover text-center>"';
+    			str += '<table class="table table-hover text-center">';
     			str += '<tr class="table-secondary">';
-    			str += '<th>번호</th> <th>아이디</th> <th>성명</th> <th>나이</th> <th>주소</th>';
-    			str += '</tr>'
-					for(let i=0; i<res.length; i++) {
-						str += '<tr>';
-						str += '<td>'+res[i].idx+'</td>'
-						str += '<td>'+res[i].mid+'</td>'
-						str += '<td>'+res[i].name+'</td>'
-						str += '<td>'+res[i].age+'</td>'
-						str += '<td>'+res[i].address+'</td>'
-						str += '</tr>';
-					}
+    			str += '<th>번호</th><th>아이디</th><th>성명</th><th>나이</th><th>주소</th>';
+    			str += '</tr>';
+    			for(let i=0; i<res.length; i++) {
+    				str += '<tr>';
+    				str += '<td>'+res[i].idx+'</td>';
+    				str += '<td>'+res[i].mid+'</td>';
+    				str += '<td>'+res[i].name+'</td>';
+    				str += '<td>'+res[i].age+'</td>';
+    				str += '<td>'+res[i].address+'</td>';
+    				str += '</tr>';
+    			}
     			str += '</table>';
     			$("#demo1").html(str);
     		},
     		error : () => alert("전송오류")
     	});
     }
-
-    //vos검색(부분일치 - like연산자 사용)
+    
+    // vos검색(부분일치 - like연산자 사용)
     function midCheck4() {
     	let mid = document.getElementById("mid").value;
     	if(mid.trim() == "") {
@@ -211,22 +213,22 @@
     		success:function(res) {
     			//console.log(res);
     			//$("#demo1").html(res);
-    			let str = '<h4>vos로 정손된 자료 출력</h4>';
+    			let str = '<h4>vos로 전송된 자료 출력</h4>';
     			
     			if(res != '') {
-	    			str += '<table class=" table table-hover text-center>"';
+	    			str += '<table class="table table-hover text-center">';
 	    			str += '<tr class="table-secondary">';
-	    			str += '<th>번호</th> <th>아이디</th> <th>성명</th> <th>나이</th> <th>주소</th>';
-	    			str += '</tr>'
-						for(let i=0; i<res.length; i++) {
-							str += '<tr>';
-							str += '<td>'+res[i].idx+'</td>'
-							str += '<td>'+res[i].mid+'</td>'
-							str += '<td>'+res[i].name+'</td>'
-							str += '<td>'+res[i].age+'</td>'
-							str += '<td>'+res[i].address+'</td>'
-							str += '</tr>';
-						}
+	    			str += '<th>번호</th><th>아이디</th><th>성명</th><th>나이</th><th>주소</th>';
+	    			str += '</tr>';
+	    			for(let i=0; i<res.length; i++) {
+	    				str += '<tr>';
+	    				str += '<td>'+res[i].idx+'</td>';
+	    				str += '<td>'+res[i].mid+'</td>';
+	    				str += '<td>'+res[i].name+'</td>';
+	    				str += '<td>'+res[i].age+'</td>';
+	    				str += '<td>'+res[i].address+'</td>';
+	    				str += '</tr>';
+	    			}
 	    			str += '</table>';
     			}
     			else {

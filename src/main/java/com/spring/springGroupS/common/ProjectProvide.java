@@ -93,7 +93,6 @@ public class ProjectProvide {
 		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/"+part+"/");
 		File file = new File(realPath + fileName);
 		if(file.exists()) file.delete();
-		
 	}
 	
 	

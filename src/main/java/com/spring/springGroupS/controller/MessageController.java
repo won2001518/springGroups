@@ -16,7 +16,9 @@ public class MessageController {
 	public String getMessage(Model model, HttpSession session,
 			@PathVariable String msgFlag,
 			@RequestParam(name="mid", defaultValue = "", required = false) String mid,
-			@RequestParam(name="idx", defaultValue = "", required = false) String idx
+			@RequestParam(name="idx", defaultValue = "0", required = false) String idx,
+			@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name="pageSize", defaultValue = "10", required = false) int pageSize
 		) {
 		
 		if(msgFlag.equals("hoewonInputOk")) {
@@ -155,6 +157,26 @@ public class MessageController {
 		else if(msgFlag.equals("memberUpdateNo")) {
 			model.addAttribute("message", "회원 정보 수정실패~~");
 			model.addAttribute("url", "/member/memberUpdate?mid="+mid);
+		}
+		else if(msgFlag.equals("boardInputOk")) {
+			model.addAttribute("message", "게시글이 등록되었습니다.");
+			model.addAttribute("url", "/board/boardList");
+		}
+		else if(msgFlag.equals("boardInputNo")) {
+			model.addAttribute("message", "게시글 등록 실패~~");
+			model.addAttribute("url", "/board/boardInput");
+		}
+		else if(msgFlag.equals("boardUpdateOK")) {
+			model.addAttribute("message", "게시글 수정했습니다~~");
+			model.addAttribute("url", "/board/boardInput");
+		}
+		else if(msgFlag.equals("boardUpdateOk")) {
+			model.addAttribute("message", "게시글 수정했습니다~~");
+			model.addAttribute("url", "/board/boardList?pag="+pag+"&pageSize="+pageSize);
+		}
+		else if(msgFlag.equals("boardUpdateNo")) {
+			model.addAttribute("message", "게시글 수정실패~~");
+			model.addAttribute("url", "/board/boardUpdate?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);
 		}
 
 		
