@@ -75,6 +75,7 @@ public class ProjectProvide {
 		return sFileName;
 	}
 
+	// 지정된경로에 파일 저정하기
 	private void writeFile(MultipartFile fName, String sFileName, String part) throws IOException {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/"+part+"/");
@@ -88,12 +89,12 @@ public class ProjectProvide {
 		fos.close();
 	}
 
+	// 지정된 경로의 파일 삭제하기
 	public void fileDelete(String fileName, String part) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/"+part+"/");
 		File file = new File(realPath + fileName);
 		if(file.exists()) file.delete();
 	}
-	
 	
 }

@@ -32,8 +32,8 @@
           <script>
             CKEDITOR.replace("content", {
             	height:480,
-            	filebrowserUploadUrl:"${ctp}/imageUpload",
-            	uploadUrl:"${ctp}/imageUpload"
+            	filebrowserUploadUrl:"${ctp}/imageUpload",	// 대화상자에서 '이미지/동영상'을 선택후 '서버로전송'버튼 누를때 수행
+            	uploadUrl:"${ctp}/imageUpload"		// 업로드할 그림들을 드래그하여 글내용상자에 넣을때 수행하는곳
             });
           </script>
         </td>

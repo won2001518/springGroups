@@ -14,7 +14,7 @@
     
     function pageSizeCheck() {
     	let pageSize = $("#pageSize").val();
-    	location.href = "BoardList.bo?pageSize="+pageSize;
+    	location.href = "boardList?pageSize="+pageSize;
     }
   </script>
 </head>
@@ -28,8 +28,8 @@
 	    <td colspan="2"><h2 class="text-center mb-3">게시판 검색 리스트</h2></td>
 	  </tr>
 	  <tr>
-      <td>(<font color="blue"><b>${searchStr}</b></font>(으)로 <font color="red"><b>${searchString}</b></font>를 검색한결과 <font color="blue"><b>${fn:length(vos)}</b></font>건이 검색되었습니다.)</td>
-      <td class="text-end"><a href="BoardList.bo" class="btn btn-success btn-sm">돌아가기</a></td>
+      <td>(<font color="blue"><b>${pageVO.searchStr}</b></font>(으)로 <font color="red"><b>${pageVO.searchString}</b></font>를 검색한결과 <font color="blue"><b>${fn:length(vos)}</b></font>건이 검색되었습니다.)</td>
+      <td class="text-end"><a href="boardList" class="btn btn-success btn-sm">돌아가기</a></td>
     </tr>
   </table>
   <table class="table table-hover text-center">
@@ -40,7 +40,7 @@
     	<th>올린날짜</th>
     	<th>조회수(♥)</th>
     </tr>
-    <c:set var="curScrStartNo" value="${fn:length(vos)}"/>
+    <c:set var="curScrStartNo" value="${pageVO.curScrStartNo}"/>
     <c:forEach var="vo" items="${vos}" varStatus="st">
       <tr>
         <td>${curScrStartNo}</td>
@@ -48,20 +48,20 @@
           <c:if test="${vo.openSw == 'NO'}">
             <c:if test="${sMid != vo.mid && sAdmin != 'adminOK'}">(비밀글)</c:if>
             <c:if test="${sMid == vo.mid || sAdmin == 'adminOK'}">
-		          <a href="BoardContent.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}&boardFlag=search" class="text-decoration-none text-dark link-primary">
+		          <a href="boardContent?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}&boardFlag=search" class="text-decoration-none text-dark link-primary">
 		            <c:if test="${sAdmin == 'adminOK'}"><font color="red">(비밀글)</font></c:if>${vo.title}
 		          </a>
 		          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
             </c:if>
           </c:if>
           <c:if test="${vo.openSw != 'NO'}">
-	          <a href="BoardContent.bo?idx=${vo.idx}&boardFlag=search&search=${search}&searchString=${searchString}" class="text-decoration-none text-dark link-primary">${vo.title}</a>
+	          <a href="boardContent?idx=${vo.idx}&boardFlag=search&search=${search}&searchString=${searchString}" class="text-decoration-none text-dark link-primary">${vo.title}</a>
 	          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
           </c:if>
         </td>
         <td>${vo.nickName}</td>
         <td>
-          ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : vo.date_diff == 1 ? vo.wDate : fn:substring(vo.wDate,0,10)}
+          ${vo.date_diff == 0 ? fn:substring(vo.WDate,11,19) : vo.date_diff == 1 ? vo.WDate : fn:substring(vo.WDate,0,10)}
         </td>
         <td>${vo.readNum}
           <c:if test="${vo.good > 0}">(${vo.good})</c:if>
@@ -71,18 +71,6 @@
     </c:forEach>
   </table>
 <!-- 블록페이지 시작 -->
-	<%-- 
-	<div class="text-center">
-	  <c:if test="${pag > 1}">[<a href="BoardList.bo?pag=1&pageSize=${pageSize}" class="text-decoration-none text-dark link-primary">첫페이지</a>]</c:if>
-	  <c:if test="${curBlock > 0}">[<a href="BoardList.bo?pag=${(curBlock-1)*blockSize + 1}&pageSize=${pageSize}" class="text-decoration-none text-dark link-primary">이전블록</a>]</c:if>
-	  <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">
-	  	<c:if test="${i <= totPage && i == pag}">[<a href="BoardList.bo?pag=${i}&pageSize=${pageSize}" class="text-decoration-none text-dark link-primary"><font color="red"><b>${i}</b></font></a>]</c:if>
-	  	<c:if test="${i <= totPage && i != pag}">[<a href="BoardList.bo?pag=${i}&pageSize=${pageSize}" class="text-decoration-none text-dark link-primary">${i}</a>]</c:if>
-	  </c:forEach>
-	  <c:if test="${curBlock < lastBlock}">[<a href="BoardList.bo?pag=${(curBlock+1)*blockSize + 1}&pageSize=${pageSize}" class="text-decoration-none text-dark link-primary">다음블록</a>]</c:if>
-	  <c:if test="${pag < totPage}">[<a href="BoardList.bo?pag=${totPage}&pageSize=${pageSize}" class="text-decoration-none text-dark link-primary">마지막페이지</a>]</c:if>
-	</div>
-	--%>
 	<div class="pagination justify-content-center">
 	  <c:if test="${pag > 1}"><a href="BoardList.bo?pag=1&pageSize=${pageSize}" class="page-item page-link text-decoration-none text-dark link-primary">첫페이지</a></c:if>
 	  <c:if test="${curBlock > 0}"><a href="BoardList.bo?pag=${(curBlock-1)*blockSize + 1}&pageSize=${pageSize}" class="page-item page-link text-decoration-none text-dark link-primary">이전블록</a></c:if>
@@ -97,7 +85,7 @@
 <br/>
 <!-- 검색기 시작 -->
   <div class="text-center">
-    <form name="searchForm" method="post" action="BoardSearchList.bo">
+    <form name="searchForm" method="post" action="boardSearchList">
       <b>검색  : </b>
       <select name="search" id="search">
         <option value="title" selected>글제목</option>

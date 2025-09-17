@@ -2,6 +2,7 @@ package com.spring.springGroupS.service;
 
 import java.util.List;
 
+import com.spring.springGroupS.vo.Board2ReplyVO;
 import com.spring.springGroupS.vo.BoardVO;
 
 public interface BoardService {
@@ -27,5 +28,17 @@ public interface BoardService {
 	int setBoardUpdate(BoardVO vo);
 
 	void imgDelete(String content);
+
+	int setBoardDelete(int idx);
+
+	List<Board2ReplyVO> getBoardReply(int idx);
+
+	Board2ReplyVO getBoardParentReplyCheck(int board2Idx);
+
+	int setBoardReplyInput(Board2ReplyVO replyVO);
+
+	void setReplyOrderUpdate(int board2Idx, int re_order);
+
+	int setBoardReplyDelete(int idx);
 
 }

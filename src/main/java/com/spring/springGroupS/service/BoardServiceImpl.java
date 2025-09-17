@@ -15,6 +15,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.spring.springGroupS.dao.BoardDAO;
+import com.spring.springGroupS.vo.Board2ReplyVO;
 import com.spring.springGroupS.vo.BoardVO;
 
 @Service
@@ -141,7 +142,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void imgDelete(String content) {
-		//  					 0         1         2         3         4         5
+		//             0         1         2         3         4         5
 		//             012345678901234567890123456789012345678901234567890
 		// <img alt="" src="/springGroupS/data/board/250916121142_4.jpg" style="height:402px; width:600px" />
 		// <img alt="" src="/springGroupS/data/ckeditor/250916121142_4.jpg" style="height:402px; width:600px" />
@@ -164,10 +165,41 @@ public class BoardServiceImpl implements BoardService {
 			else nextImg = nextImg.substring(nextImg.indexOf("src=\"/") + position);
 		}
 	}
-	//파일 삭제처리
+
+	// 파일 삭제처리
 	private void fileDelete(String origFilePath) {
 		File delFile = new File(origFilePath);
 		if(delFile.exists()) delFile.delete();
+	}
+
+	@Override
+	public int setBoardDelete(int idx) {
+		return boardDAO.setBoardDelete(idx);
+	}
+
+	@Override
+	public List<Board2ReplyVO> getBoardReply(int idx) {
+		return boardDAO.getBoardReply(idx);
+	}
+
+	@Override
+	public Board2ReplyVO getBoardParentReplyCheck(int board2Idx) {
+		return boardDAO.getBoardParentReplyCheck(board2Idx);
+	}
+
+	@Override
+	public int setBoardReplyInput(Board2ReplyVO replyVO) {
+		return boardDAO.setBoardReplyInput(replyVO);
+	}
+
+	@Override
+	public void setReplyOrderUpdate(int board2Idx, int re_order) {
+		boardDAO.setReplyOrderUpdate(board2Idx, re_order);
+	}
+
+	@Override
+	public int setBoardReplyDelete(int idx) {
+		return boardDAO.setBoardReplyDelete(idx);
 	}
 	
 }

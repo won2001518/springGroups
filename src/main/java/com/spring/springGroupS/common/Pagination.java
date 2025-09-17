@@ -36,21 +36,26 @@ public class Pagination {
 		int blockSize = 3;
 		int curBlock = (pag - 1) / blockSize;
 		int lastBlock = (totPage - 1) / blockSize;
-	
-		//System.out.println("pageVO : " + pageVO);
 		
 		pageVO.setPag(pag);
 		pageVO.setPageSize(pageSize);
 		pageVO.setTotPage(totPage);
+		pageVO.setStartIndexNo(startIndexNo);
 		pageVO.setCurScrStartNo(curScrStartNo);
 		pageVO.setBlockSize(blockSize);
 		pageVO.setCurBlock(curBlock);
 		pageVO.setLastBlock(lastBlock);
 
+		if(pageVO.getSearch() != null) {
+			if(pageVO.getSearch().equals("title")) pageVO.setSearchStr("글제목");
+			else if(pageVO.getSearch().equals("nickName")) pageVO.setSearchStr("닉네임");
+			else if(pageVO.getSearch().equals("content")) pageVO.setSearchStr("글내용");
+		}
 		pageVO.setSearch(pageVO.getSearch());
 		pageVO.setSearchString(pageVO.getSearchString());
 		
 		pageVO.setPart(pageVO.getPart());
+		pageVO.setBoardFlag(pageVO.getBoardFlag());
 		
 		return pageVO;
 	}

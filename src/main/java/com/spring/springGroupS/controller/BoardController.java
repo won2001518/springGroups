@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.springGroupS.common.Pagination;
 import com.spring.springGroupS.service.BoardService;
+import com.spring.springGroupS.vo.Board2ReplyVO;
 import com.spring.springGroupS.vo.BoardVO;
 import com.spring.springGroupS.vo.PageVO;
 
@@ -67,7 +68,7 @@ public class BoardController {
 	// 글 내용 보기(조회수증가:중복방지, '이전글/다음글')
 	@SuppressWarnings("unchecked")
 	@GetMapping("/boardContent")
-	public String boardContentGet(Model model, int idx, HttpSession session,
+	public String boardContentGet(Model model, int idx, HttpSession session, String boardFlag,
 			@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name="pageSize", defaultValue = "10", required = false) int pageSize
 		) {
@@ -88,12 +89,17 @@ public class BoardController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("pag", pag);
 		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("boardFlag", boardFlag);
 		
 		// '이전글/다음글' 처리
 		BoardVO preVO  = boardService.getPreNextSearch(idx, "preVO");
 		BoardVO nextVO = boardService.getPreNextSearch(idx, "nextVO");
 		model.addAttribute("preVO", preVO);
 		model.addAttribute("nextVO", nextVO);
+		
+		// 댓글(대댓글) 가져오기
+		List<Board2ReplyVO> replyVos = boardService.getBoardReply(idx);
+		model.addAttribute("replyVos", replyVos);
 		
 		return "board/boardContent";
 	}
@@ -146,10 +152,11 @@ public class BoardController {
 		
 		// content내용중에서 조금이라도 수정한 것이 있다면 사진에 대한 처리를 한다.
 		if(!origVO.getContent().equals(vo.getContent())) {
-			// 1. 기존 board폴더에 그림파일이 존재했다면 원본 그림파일삭제처리
-			if(vo.getContent().indexOf("src=\"/") != -1) boardService.imgDelete(origVO.getContent());
+			// 1. 기존 board폴더(origVO를 확인)에 그림파일이 존재했다면 원본 그림파일(origVO)삭제처리
+			if(origVO.getContent().indexOf("src=\"/") != -1) boardService.imgDelete(origVO.getContent());
 			
-			// content필드안에는 현재 board폴더로 설정되어 있기에, board폴더를 ckeditor로 변경처리한다.
+			// content필드내용중 이미지 경로는 현재 board로 설정되어 있기에, board폴더를 ckeditor로 변경처리한다.
+			// 왜냐하면, 처음 입력시 사진은 ckeditor폴더에 있어야 하고, 수정처리를 했던, 하지않았던 원본그림도 ckeditor폴더에 복사해 두었다.
 			vo.setContent(vo.getContent().replace("/data/board/", "/data/ckeditor/"));
 			
 			// 2. board폴더의 그림파일 삭제 완료후(그림파일이 존재시), 입력시 작업과 같은 작업(ckeditor폴더에서 board폴더로 복사)을 수행처리한다.
@@ -157,9 +164,8 @@ public class BoardController {
 			
 			// 3.이미지 작업(복사작업)을 모두 마치면, ckeditor폴더경로를 board폴더로 변경시킨다.
 			vo.setContent(vo.getContent().replace("/data/ckeditor/", "/data/board/"));
-			
 		}
-		
+		// 수정된 내용들을 DB에 업데이트 처리한다.
 		int res = boardService.setBoardUpdate(vo);
 		
 		model.addAttribute("idx", vo.getIdx());
@@ -171,4 +177,88 @@ public class BoardController {
 		if(res != 0) return "redirect:/message/boardUpdateOk";
 		else return "redirect:/message/boardUpdateNo";
 	}
+	
+	// 게시글 삭제 처리
+	@GetMapping("/boardDelete")
+	public String boardDeleteGet(Model model, int idx,
+			@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name="pageSize", defaultValue = "10", required = false) int pageSize
+		) {
+		// 게시글에 사진이 존재한다면 서버에 저장된 사진을 먼저 삭제처리한다.
+		BoardVO vo = boardService.getBoardContent(idx);
+		if(vo.getContent().indexOf("src=\"/") != -1) boardService.imgDelete(vo.getContent());
+		
+		// 사진작업처리를 마치고 DB에 저장된 실제 정보레코드를 삭제처리한다.
+		int res = boardService.setBoardDelete(idx);
+		
+		model.addAttribute("idx", idx);
+		model.addAttribute("pag", pag);
+		model.addAttribute("pageSize", pageSize);
+		
+		if(res != 0) return "redirect:/message/boardDeleteOk";
+		else return "redirect:/message/boardDeleteNo";
+	}
+	
+	// 부모댓글 입력처리(원본글에 대한 댓글)
+	@ResponseBody
+	@PostMapping("/boardReplyInput")
+	public int boardReplyInputPost(Board2ReplyVO replyVO) {
+		// 부모댓글은 ref는 원본글의 idx, re_step=1, re_order=1, 단, 부모댓글이 아닌 대댓글인경우는 마지막 부모댓글의 re_step+1, re_order+1처리
+		Board2ReplyVO replyParentVO = boardService.getBoardParentReplyCheck(replyVO.getBoard2Idx());
+		replyVO.setRef(replyVO.getBoard2Idx());
+		
+		if(replyParentVO == null) {
+			replyVO.setRe_step(1);
+			replyVO.setRe_order(1);
+		}
+		else {
+			if(replyVO.getReplySw() != 1) {		// 일반댓글창에서는 replySw가 1이 들어온다.
+				replyVO.setRe_step(replyParentVO.getRe_step()+1);	// 대댓글창에서 보낼때 수행한다.
+			}
+			else {
+				replyVO.setRe_step(1);	// 일반댓글창에서 보낼때 수행한다.
+			}
+			replyVO.setRe_order(replyParentVO.getRe_order()+1);
+		}
+		
+		return boardService.setBoardReplyInput(replyVO);
+	}
+	
+	// 대댓글 입력처리(부모댓글에 대한 댓글)
+	@ResponseBody
+	@PostMapping("/boardReplyInputOk")
+	public int boardReplyInputOkPost(Board2ReplyVO replyVO) {
+		// 대댓글(답변글)의 re_order는 1:자신의 re_step은 부모re_step+1 시켜주고, 
+		// 2:부모댓글 re_order값보다 큰re_order은 re_order+1시켜주고, 3:자신의 re_order는 부모re_order+1처리한다.
+		System.out.println("replyVO22 : " + replyVO);
+		replyVO.setRe_step(replyVO.getRe_step()+1);	// 1번처리
+		boardService.setReplyOrderUpdate(replyVO.getBoard2Idx(), replyVO.getRe_order());	// 2번처리
+		replyVO.setRe_order(replyVO.getRe_order() + 1);
+		
+		int res = boardService.setBoardReplyInput(replyVO);
+		
+		return res;
+	}
+	
+	// 댓글 삭제처리
+	@ResponseBody
+	@PostMapping("/boardReplyDelete")
+	public int boardReplyDeletePost(int idx) {
+		return boardService.setBoardReplyDelete(idx);
+	}
+	
+	// 검색기처리
+	@GetMapping("/boardSearchList")
+	public String boardSearchListget(Model model, PageVO pageVO) {
+		pageVO.setSection("board");
+		pageVO = pagination.pagination(pageVO);
+		
+		List<BoardVO> vos = boardService.getBoardList(pageVO.getStartIndexNo(), pageVO.getPageSize(), pageVO.getSearch(), pageVO.getSearchString());
+		
+		model.addAttribute("vos", vos);
+		model.addAttribute("pageVO", pageVO);
+		
+		return "board/boardSearchList";
+	}
+	
 }

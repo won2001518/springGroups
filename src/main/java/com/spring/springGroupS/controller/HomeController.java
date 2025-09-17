@@ -62,6 +62,18 @@ public class HomeController {
 		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/ckeditor/");
 		String oFileName = upload.getOriginalFilename();
 		
+		// 확장자 제한처리(이미지파일(jpg,gif,png) + 동영상파일(mp4))
+		String regExt = "(jpg|jpeg|gif|png|mp4)";
+		String ext = oFileName.substring(oFileName.lastIndexOf(".")+1);
+		if(!ext.matches(regExt)) {
+			System.out.println("잘못된 파일 업로드중...");
+//			PrintWriter out = response.getWriter();		// 사용자 메세지 처리 안됨...ㅜㅜ...
+//			out.println("<script>");
+//			out.println("alert('업로드할 화일형식을 확인하세요');");
+//			out.println("</script>");
+			return;
+		}
+		
 		// 파일명 중복방지를 위해 날짜구분기호로 처리
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
