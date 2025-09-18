@@ -201,5 +201,10 @@ public class BoardServiceImpl implements BoardService {
 	public int setBoardReplyDelete(int idx) {
 		return boardDAO.setBoardReplyDelete(idx);
 	}
+
+	@Override
+	public int setBoardReplyUpdateOk(Board2ReplyVO vo) {
+		return boardDAO.setBoardReplyUpdateOk(vo);
+	}
 	
 }

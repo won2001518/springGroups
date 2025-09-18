@@ -36,4 +36,6 @@ public interface MemberDAO {
 
 	int getTotRecCnt();
 
+	List<MemberVO> getMemberLevelCount(@Param("level") int level);
+
 }

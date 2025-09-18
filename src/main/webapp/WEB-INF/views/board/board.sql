@@ -11,7 +11,7 @@ create table board2 (
   readNum int default 0,						/* 글 조회수 */
   wDate datetime default now(),			/* 글 올린 날짜 */
   good  int default 0,							/* 좋아요 클릭수 */
-  complaint char(2) default 'NO',	/* 신고글(정상글:NO, 신고당한글:OK) */
+  complaint char(2) default 'NO',		/* 신고글(정상글:NO, 신고당한글:OK, 신고처리중:HI) */
   primary key(idx),
   foreign key(mid) references member(mid)
 );
@@ -60,10 +60,9 @@ create table board2Reply (
   on delete restrict
 );
 desc board2Reply;
-drop table board2Reply;
 
-insert into board2Reply values (default, 10, 10, 1, 1, 'hkd1234','홍장군',default,'192.168.50.20','댓글연습!!!!');
-insert into board2Reply values (default, 10, 10, 1, 2, 'kms1234','독야청청',default,'192.168.50.19','수고하십니다.');
+insert into board2Reply values (default, 27, 27, 1, 1, 'hkd1234','홍장군',default,'192.168.50.20','댓글연습!!!!');
+insert into board2Reply values (default, 27, 27, 1, 2, 'kms1234','독야청청',default,'192.168.50.19','수고하십니다.');
 
 select * from board2Reply order by idx desc;
 select * from board2Reply where board2Idx=27 order by idx desc;

@@ -53,18 +53,23 @@
       <tr>
         <td>${curScrStartNo}</td>
         <td class="text-start">
-          <c:if test="${vo.openSw == 'NO'}">
-            <c:if test="${sMid != vo.mid && sAdmin != 'adminOK'}">(비밀글)</c:if>
-            <c:if test="${sMid == vo.mid || sAdmin == 'adminOK'}">
-		          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">
-		            <c:if test="${sAdmin == 'adminOK'}"><font color="red">(비밀글)</font></c:if>${vo.title}
-		          </a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary">${vo.replyCnt}</span></c:if>
+        	<c:if test="${vo.complaint != 'HI'}">
+	          <c:if test="${vo.openSw == 'NO'}">
+	            <c:if test="${sMid != vo.mid && sAdmin != 'adminOK'}">(비밀글)</c:if>
+	            <c:if test="${sMid == vo.mid || sAdmin == 'adminOK'}">
+			          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">
+			            <c:if test="${sAdmin == 'adminOK'}"><font color="red">(비밀글)</font></c:if>${vo.title}
+			          </a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary">${vo.replyCnt}</span></c:if>
+			          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+	            </c:if>
+	          </c:if>
+	          <c:if test="${vo.openSw != 'NO'}">
+		          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">${vo.title}</a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary" style="font-size:10px">${vo.replyCnt}</span></c:if>
 		          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
-            </c:if>
+	          </c:if>
           </c:if>
-          <c:if test="${vo.openSw != 'NO'}">
-	          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">${vo.title}</a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary" style="font-size:10px">${vo.replyCnt}</span></c:if>
-	          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+          <c:if test="${vo.complaint == 'HI'}">
+          	<div>${vo.title} - <font color='red'><b>현재 글은 신고중입니다</b></font></div>
           </c:if>
         </td>
         <td>${vo.nickName}</td>

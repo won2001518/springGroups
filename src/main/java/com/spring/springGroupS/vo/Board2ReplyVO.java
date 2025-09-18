@@ -14,6 +14,4 @@ public class Board2ReplyVO {
 	private String wDate;
 	private String hostIp;
 	private String content;	
-	
-	private int replySw;	// 원본글에서 보낸 댓글임을 알려준다.
 }

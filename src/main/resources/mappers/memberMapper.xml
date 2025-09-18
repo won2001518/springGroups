@@ -26,6 +26,9 @@
 	  select count(*) from member;
 	</select>
 	
+	<select id="getMemberLevelCount" resultType="com.spring.springGroupS.vo.MemberVO">
+		select * from member where level = #{level};
+	</select>
 	
 	
 	

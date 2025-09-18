@@ -72,6 +72,10 @@
 	  update board2Reply set re_order = re_order + 1 where board2Idx=#{board2Idx} and re_order > #{re_order};
 	</update>
 	
+	<update id="setBoardReplyUpdateOk">
+	  update board2Reply set content = #{vo.content} where idx=#{vo.idx};
+	</update>
+	
 	
 	
 	

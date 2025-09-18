@@ -34,4 +34,6 @@ public interface MemberService {
 
 	int getTotRecCnt();
 
+	List<MemberVO> getMemberLevelCount(int level);
+
 }
