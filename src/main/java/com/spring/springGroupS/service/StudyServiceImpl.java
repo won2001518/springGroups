@@ -1,6 +1,5 @@
 package com.spring.springGroupS.service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.springGroupS.dao.StudyDAO;
 import com.spring.springGroupS.vo.MemberVO;
@@ -186,6 +186,40 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public List<MemberVO> getMemberList() {
 		return studyDAO.getMemberList();
+	}
+
+	@Override
+	public int setMultiFileUpload(MultipartHttpServletRequest mFile, String mid) {
+		int res = 0;
+		
+		try {
+			List<MultipartFile> fileList = mFile.getFiles("fName");
+			String oFileNames = "";
+			String sFileNames = "";
+			int fileSize = 0;
+			
+			for(MultipartFile file : fileList) {
+				String oFileName = file.getOriginalFilename();
+				String sFileName = mid + "_" + UUID.randomUUID().toString().substring(0, 4) + "_" + oFileName;
+			
+				writeFile(file, sFileName);
+				
+				oFileNames += oFileName + "/";
+				sFileNames += sFileName + "/";
+				fileSize += file.getSize();
+			}
+			oFileNames = oFileNames.substring(0, oFileNames.length()-1);
+			sFileNames = sFileNames.substring(0, sFileNames.length()-1);
+			
+			System.out.println("원본파일목록 : " + oFileNames);
+			System.out.println("저장파일목록 : " + sFileNames);
+			System.out.println("총 파일크기 : " + fileSize);
+			
+			res = 1;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 	
 	

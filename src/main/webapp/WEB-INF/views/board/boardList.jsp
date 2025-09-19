@@ -30,13 +30,17 @@
 	  <tr>
       <td><a href="boardInput" class="btn btn-success btn-sm">글쓰기</a></td>
       <td class="text-end">
-        <select name="pageSize" id="pageSize" onchange="pageSizeCheck()">
-          <option ${pageVO.pageSize==5  ? 'selected' : ''}>5</option>
-          <option ${pageVO.pageSize==10 ? 'selected' : ''}>10</option>
-          <option ${pageVO.pageSize==15 ? 'selected' : ''}>15</option>
-          <option ${pageVO.pageSize==20 ? 'selected' : ''}>20</option>
-          <option ${pageVO.pageSize==30 ? 'selected' : ''}>30</option>
-        </select>
+        <div class="d-flex justify-content-end">
+          <div>
+		        <select name="pageSize" id="pageSize" onchange="pageSizeCheck()" class="form-select bg-success-subtle">
+		          <option ${pageVO.pageSize==5  ? 'selected' : ''}>5</option>
+		          <option ${pageVO.pageSize==10 ? 'selected' : ''}>10</option>
+		          <option ${pageVO.pageSize==15 ? 'selected' : ''}>15</option>
+		          <option ${pageVO.pageSize==20 ? 'selected' : ''}>20</option>
+		          <option ${pageVO.pageSize==30 ? 'selected' : ''}>30</option>
+		        </select>
+	        </div>
+        </div>
       </td>
     </tr>
   </table>
@@ -53,24 +57,20 @@
       <tr>
         <td>${curScrStartNo}</td>
         <td class="text-start">
-        	<c:if test="${vo.complaint != 'HI'}">
-	          <c:if test="${vo.openSw == 'NO'}">
-	            <c:if test="${sMid != vo.mid && sAdmin != 'adminOK'}">(비밀글)</c:if>
-	            <c:if test="${sMid == vo.mid || sAdmin == 'adminOK'}">
-			          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">
-			            <c:if test="${sAdmin == 'adminOK'}"><font color="red">(비밀글)</font></c:if>${vo.title}
-			          </a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary">${vo.replyCnt}</span></c:if>
-			          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
-	            </c:if>
-	          </c:if>
-	          <c:if test="${vo.openSw != 'NO'}">
-		          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">${vo.title}</a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary" style="font-size:10px">${vo.replyCnt}</span></c:if>
+          <c:if test="${vo.openSw == 'NO'}">
+            <c:if test="${sMid != vo.mid && sAdmin != 'adminOK'}">(비밀글)</c:if>
+            <c:if test="${sMid == vo.mid || sAdmin == 'adminOK'}">
+		          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">
+		            <c:if test="${sAdmin == 'adminOK'}"><font color="red">(비밀글)</font></c:if>${vo.title}
+		          </a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary">${vo.replyCnt}</span></c:if>
 		          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
-	          </c:if>
+            </c:if>
           </c:if>
-          <c:if test="${vo.complaint == 'HI'}">
-          	<div>${vo.title} - <font color='red'><b>현재 글은 신고중입니다</b></font></div>
+          <c:if test="${vo.openSw != 'NO'}">
+	          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">${vo.title}</a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary" style="font-size:10px">${vo.replyCnt}</span></c:if>
+	          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
           </c:if>
+          <c:if test="${vo.complaint == 'HI'}"><span class="badge bg-danger">신고중</span></c:if>
         </td>
         <td>${vo.nickName}</td>
         <td>

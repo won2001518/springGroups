@@ -90,7 +90,7 @@ public class AdminController {
 	public String complaintListGet(Model model, PageVO pageVO) {
 		pageVO.setSection("complaint");
 		pageVO = pagination.pagination(pageVO);
-		List<ComplaintVO> vos = adminService.getComplaintList(pageVO.getStartIndexNo(),pageVO.getPageSize());
+		List<ComplaintVO> vos = adminService.getComplaintList(pageVO.getStartIndexNo(),pageVO.getPageSize(), pageVO.getPart());
 		model.addAttribute("vos", vos);
 		return "admin/complaint/complaintList";
 	}
@@ -99,7 +99,6 @@ public class AdminController {
 	@GetMapping("/complaint/complaintContent")
 	public String complaintContentGet(Model model, int partIdx) {
 		ComplaintVO vo = adminService.getComplaintSearch(partIdx);
-		System.out.println("vo : " + vo);
 		model.addAttribute("vo", vo);
 		return "admin/complaint/complaintContent";
 	}
@@ -117,13 +116,12 @@ public class AdminController {
 			if(vo.getComplaintSw().equals("H")) {
 				res = adminService.setComplaintProcess(vo.getPartIdx(), "HI");
 				vo.setComplaintSw("처리중(H)");
-			}	
+			}
 			else {
 				res =adminService.setComplaintProcess(vo.getPartIdx(), "NO");
-				vo.setComplaintSw("처리해제(S)");
+				vo.setComplaintSw("처리완료(S)");
 			}
 		}
-		System.out.println("idx: " + vo.getIdx() + ", sw : " + vo.getComplaintSw());
 		if(res != 0) adminService.setComplaintProcessOk(vo.getIdx(), vo.getComplaintSw());
 		
 		return res;

@@ -3,8 +3,10 @@ package com.spring.springGroupS.common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.springGroupS.service.AdminService;
 import com.spring.springGroupS.service.BoardService;
 import com.spring.springGroupS.service.MemberService;
+import com.spring.springGroupS.service.PdsService;
 import com.spring.springGroupS.vo.PageVO;
 
 @Service
@@ -15,12 +17,19 @@ public class Pagination {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	AdminService adminService;
+	
+	@Autowired
+	PdsService pdsService;
 
 	public PageVO pagination(PageVO pageVO) {	// 각각의 변수로 받으면 초기값처리를 spring가 자동할수 있으나, 객체로 받으면 개별 문자/객체 자료에는 null이 들어오기에 따로 초기화 작업처리해야함.
 		//System.out.println("pageVO(Pagination) : " + pageVO);
 		int pag = pageVO.getPag() == 0 ? 1 : pageVO.getPag();
 		int pageSize = pageVO.getPageSize() == 0 ? 10 : pageVO.getPageSize();
 		int level = pageVO.getLevel() == 0 ? 99 : pageVO.getLevel();
+		String part = pageVO.getPart() == null ? "" : pageVO.getPart();
 		
 		int totRecCnt = 0;
 		if(pageVO.getSection().equals("board")) {
@@ -30,6 +39,12 @@ public class Pagination {
 		else if(pageVO.getSection().equals("member")) {
 			if(level == 99)	totRecCnt = memberService.getTotRecCnt();
 			else totRecCnt = memberService.getMemberLevelCount(level).size();
+		}
+		else if(pageVO.getSection().equals("complaint")) {
+			totRecCnt = adminService.getComplaintTotRecCnt(part);
+		}
+		else if(pageVO.getSection().equals("pds")) {
+			totRecCnt = pdsService.getTotRecCnt(part);
 		}
 		
 		int totPage = (totRecCnt % pageSize) == 0 ? totRecCnt / pageSize : (totRecCnt / pageSize) + 1;
@@ -58,7 +73,7 @@ public class Pagination {
 		pageVO.setSearch(pageVO.getSearch());
 		pageVO.setSearchString(pageVO.getSearchString());
 		
-		pageVO.setPart(pageVO.getPart());
+		pageVO.setPart(part);
 		pageVO.setBoardFlag(pageVO.getBoardFlag());
 		
 		pageVO.setLevel(level);

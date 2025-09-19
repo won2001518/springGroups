@@ -33,7 +33,7 @@
     <c:if test="${sLevel <= 3}">
 	    <a href="${ctp}/board/boardList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Board</a>
 	    <c:if test="${sLevel < 3}">
-		    <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">PDS</a>
+		    <a href="${ctp}/pds/pdsList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">PDS</a>
 		    <div class="w3-dropdown-hover w3-hide-small">
 		      <button class="w3-padding-large w3-button" title="More">Study1 <i class="fa fa-caret-down"></i></button>     
 		      <div class="w3-dropdown-content w3-bar-block w3-card-4">
@@ -47,6 +47,8 @@
 		        <a href="${ctp}/study1/password/passwordForm" class="w3-bar-item w3-button">암호화연습</a>
 		        <a href="${ctp}/study1/mail/mailForm" class="w3-bar-item w3-button">메일 연습</a>
 		        <a href="${ctp}/study1/fileUpload/fileUploadForm" class="w3-bar-item w3-button">파일업로드연습</a>
+		        <a href="${ctp}/study1/sweetAlert/sweetAlertForm" class="w3-bar-item w3-button">SweetAlert연습</a>
+		        
 		      </div>
 		    </div>
 	    </c:if>

@@ -14,7 +14,7 @@ public interface AdminService {
 
 	void setBoardTableComplaintOk(int partIdx);
 
-	List<ComplaintVO> getComplaintList(int startIndexNo, int pageSize);
+	List<ComplaintVO> getComplaintList(int startIndexNo, int pageSize, String part);
 
 	ComplaintVO getComplaintSearch(int partIdx);
 
@@ -23,5 +23,7 @@ public interface AdminService {
 	int setComplaintProcess(int partIdx, String flag);
 
 	int setComplaintProcessOk(int idx, String complaintSw);
+
+	int getComplaintTotRecCnt(String part);
 
 }

@@ -8,4 +8,5 @@
   <i class="fa fa-pinterest-p w3-hover-opacity"></i>
   <i class="fa fa-linkedin w3-hover-opacity"></i>
   <p class="w3-medium">Copyright 2025. 8. 21. Design By Happy Cheon. &nbsp;&nbsp;Powered by <a href="http://localhost:9090/springGroupS">springGroupS</a></p>
+  <p class="text-center"><%=request.getSession().getServletContext().getRealPath("/")%></p>
 </footer>

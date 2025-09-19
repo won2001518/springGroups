@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.springGroupS.vo.MemberVO;
 import com.spring.springGroupS.vo.UserVO;
@@ -23,5 +24,7 @@ public interface StudyService {
 	int setFileUpload(MultipartFile fName, String mid);
 
 	List<MemberVO> getMemberList();
+
+	int setMultiFileUpload(MultipartHttpServletRequest mFile, String mid);
 
 }

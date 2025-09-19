@@ -115,6 +115,14 @@ public class MessageController {
 			model.addAttribute("message", "파일 업로드 실패~~");
 			model.addAttribute("url", "/study1/fileUpload/fileUploadForm");
 		}
+		else if(msgFlag.equals("multiFileUploadOk")) {
+			model.addAttribute("message", "파일이 업로드 되었습니다.");
+			model.addAttribute("url", "/study1/fileUpload/multiFileUpload");
+		}
+		else if(msgFlag.equals("multiFileUploadNo")) {
+			model.addAttribute("message", "파일 업로드 실패~~");
+			model.addAttribute("url", "/study1/fileUpload/multiFileUpload");
+		}
 		else if(msgFlag.equals("idCheckNo")) {
 			model.addAttribute("message", "이미 사용중인 아이디가 있습니다.\\n아이디를 확인후 다시 회원가입하세요.");
 			model.addAttribute("url", "/member/memberJoin");

@@ -7,13 +7,13 @@
 		  timestampdiff(hour, wDate, now()) as hour_diff,
 		  datediff(now(), wDate) as date_diff,
 		  (select count(*) from board2Reply where board2Idx=b.idx) as replyCnt
-		  FROM board2 b
-		  <if test="search != null and search != ''"> where ${search} like concat("%",#{searchString},"%")</if>
+		  FROM board2 b where complaint != 'DE'
+		  <if test="search != null and search != ''"> and ${search} like concat("%",#{searchString},"%")</if>
 		  ORDER BY idx DESC limit #{startIndexNo},#{pageSize};
 	</select>
 	
 	<select id="getTotRecCnt" resultType="int">
-	  select count(*) from board2 <if test="search != ''"> where ${search} like concat("%",#{searchString},"%")</if>;
+	  select count(*) from board2  where complaint != 'DE' <if test="search != ''"> and ${search} like concat("%",#{searchString},"%")</if>;
 	</select>
 	
 	<select id="getBoardContent" resultType="com.spring.springGroupS.vo.BoardVO">
@@ -23,10 +23,10 @@
 	<!--  <![CDATA[조건식....]]>   -->
 	<select id="getPreNextSearch" resultType="com.spring.springGroupS.vo.BoardVO">
 	  <if test="str == 'preVO'">
-		  select idx,title from board2 where <![CDATA[idx < #{idx}]]>  order by idx desc limit 1;
+		  select idx,title from board2 where complaint != 'DE' and <![CDATA[idx < #{idx}]]>  order by idx desc limit 1;
 		</if>
 	  <if test="str != 'preVO'">
-		  select idx,title from board2 where <![CDATA[idx > #{idx}]]> order by idx limit 1;
+		  select idx,title from board2 where complaint != 'DE' and <![CDATA[idx > #{idx}]]> order by idx limit 1;
 		</if>
 	</select>
 	
