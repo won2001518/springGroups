@@ -8,10 +8,20 @@
 		
 	<select id="getPdsList" resultType="com.spring.springGroupS.vo.PdsVO">
 	  select * from pds2 <if test='part != ""'> where part = #{part} </if> order by idx desc limit #{startIndexNo},#{pageSize};
-	</select>	
-
+	</select>
+		
 	<select id="getPdsContent" resultType="com.spring.springGroupS.vo.PdsVO">
 	  select * from pds2 where idx = #{idx};
+	</select>
+		
+	<select id="getReviewList" resultType="com.spring.springGroupS.vo.ReviewVO">
+	  <!-- select * from review where part=#{part} and partIdx=#{idx}; -->
+	  <!-- 
+	  select * from review v, reviewReply r 
+  		where part=#{part} and v.partIdx=#{idx} and v.idx=r.reviewIdx;
+  	-->
+  	select * from (select * from review where partIdx=10) v left join reviewReply r 
+  		on part=#{part} and v.partIdx=#{idx} and v.idx=r.reviewIdx;
 	</select>	
 	
 	
@@ -19,25 +29,18 @@
 	<insert id="setPdsInput">
 	  insert into pds2 values (default,#{vo.mid},#{vo.nickName},#{vo.fName},#{vo.fSName},#{vo.fSize},#{vo.part},#{vo.title},#{vo.content},#{vo.openSw},#{vo.hostIp},default,default);
 	</insert>
-
-
+	
+	
+	
 	<update id="setPdsDownNumCheck">
-		update pds2 set downNum + 1 where idx =#{idx}
+	  update pds2 set downNum = downNum + 1 where idx = #{idx};
 	</update>
 	
 	
 	
 	
 	<delete id="setPdsDeleteCheck">
-		delete from pds2 where idx =#{idx};
+	  delete from pds2 where idx = #{idx};
 	</delete>
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 </mapper>

@@ -43,13 +43,17 @@
     <tr>
       <td>
         <form name="partForm">
-          <select name="part" id="part" onchange="partCheck()">
-            <option value="" ${pageVO.part=="" ? "selected" : ""}>전체</option>
-            <option ${pageVO.part=="학습" ? "selected" : ""}>학습</option>
-            <option ${pageVO.part=="여행" ? "selected" : ""}>여행</option>
-            <option ${pageVO.part=="음식" ? "selected" : ""}>음식</option>
-            <option ${pageVO.part=="기타" ? "selected" : ""}>기타</option>
-          </select>
+          <div class="d-flex justify-content-start">
+            <div>
+		          <select name="part" id="part" onchange="partCheck()" class="form-select">
+		            <option value="" ${pageVO.part=="" ? "selected" : ""}>전체</option>
+		            <option ${pageVO.part=="학습" ? "selected" : ""}>학습</option>
+		            <option ${pageVO.part=="여행" ? "selected" : ""}>여행</option>
+		            <option ${pageVO.part=="음식" ? "selected" : ""}>음식</option>
+		            <option ${pageVO.part=="기타" ? "selected" : ""}>기타</option>
+		          </select>
+	          </div>
+          </div>
         </form>
       </td>
       <td class="text-end">
@@ -78,7 +82,7 @@
         </td>
         <td>${vo.nickName}</td>
         <td>
-          ${vo.FDate}
+          ${fn:substring(vo.FDate,0,10)}
         </td>
         <td>${vo.part}</td>
         <td>
