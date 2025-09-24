@@ -20,7 +20,7 @@
 	  select * from review v, reviewReply r 
   		where part=#{part} and v.partIdx=#{idx} and v.idx=r.reviewIdx;
   	-->
-  	select * from (select * from review where partIdx=10) v left join reviewReply r 
+  	select * from (select * from review where partIdx=#{idx}) v left join reviewReply r 
   		on part=#{part} and v.partIdx=#{idx} and v.idx=r.reviewIdx;
 	</select>	
 	

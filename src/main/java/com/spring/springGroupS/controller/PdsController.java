@@ -75,6 +75,15 @@ public class PdsController {
 		List<ReviewVO> reviewVos = pdsService.getReviewList(idx, "pds");
 		model.addAttribute("reviewVos", reviewVos);
 		
+		// 리뷰 별점 평균 구하기
+		int reviewTot = 0;
+		for(ReviewVO r : reviewVos) {
+			reviewTot += r.getStar();
+		}
+		double reviewAvg = 0.0;
+		if(reviewVos.size() != 0) reviewAvg = (double) reviewTot / reviewVos.size();
+		model.addAttribute("reviewAvg", reviewAvg);
+		
 		return "pds/pdsContent";
 	}
 	
