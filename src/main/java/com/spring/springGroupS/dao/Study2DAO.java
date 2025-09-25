@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.springGroupS.vo.CrimeVO;
 import com.spring.springGroupS.vo.TransactionVO;
 
 public interface Study2DAO {
@@ -23,5 +24,15 @@ public interface Study2DAO {
 	void setTransactionUser2Input(@Param("vo") TransactionVO vo);
 
 	void setTransactionUserTotalInput(@Param("vo") TransactionVO vo);
+
+	void setSaveCrimeCheck(@Param("vo") CrimeVO vo);
+
+	void setDeleteCrimeCheck(@Param("year") int year);
+
+	List<CrimeVO> setDbListCrimeCheck(@Param("year") int year);
+
+	List<CrimeVO> getDataApiPoliceForm(@Param("year") int year, @Param("policeZone") String policeZone);
+
+	CrimeVO getCrimeAnalyze(@Param("year") int year, @Param("policeZone") String policeZone);
 
 }

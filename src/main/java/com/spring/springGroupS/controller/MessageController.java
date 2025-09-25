@@ -202,10 +202,10 @@ public class MessageController {
 			model.addAttribute("url", "/pds/pdsInput");
 		}
 		else if(msgFlag.equals("transactionUserInputOk")) {
-			model.addAttribute("message", "회원가입성공");
+			model.addAttribute("message", "회원 가입 완료...");
 			model.addAttribute("url", "/study2/transaction/transactionForm");
 		}
-		
+
 		
 		return "include/message";
 	}
