@@ -105,7 +105,7 @@
     		data : query,
     		success:function(res) {
     			alert(res);
-	    		location.reload();
+    			location.reload();
     		},
     		error : function() {
     			alert("전송오류!(두번째 테이블을 확인해보세요)");

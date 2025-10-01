@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.springGroupS.service.Study2Service;
 import com.spring.springGroupS.vo.ChartVO;
 import com.spring.springGroupS.vo.CrimeVO;
+import com.spring.springGroupS.vo.KakaoAddressVO;
 import com.spring.springGroupS.vo.TransactionVO;
 
 @Controller
@@ -212,7 +213,85 @@ public class Study2Controller {
 	
 	@RequestMapping(value = "/chart/googleChart2", method = RequestMethod.POST)
 	public String googleChart2Post(Model model, ChartVO vo) {
+		//System.out.println("vo : " + vo);
 		model.addAttribute("vo", vo);
 		return "study2/chart2/chart2Form";
 	}
+	
+	// Kakaomap 연습
+	@GetMapping("/kakao/kakaomap")
+	public String kakaomapGet() {
+		return "study2/kakao/kakaomap";
+	}
+	
+	// Kakaomap(지도정보획득) - 수정....
+	@SuppressWarnings("null")
+	@GetMapping("/kakao/kakaoEx1")
+	public String kakaoEx1Get(Model model, KakaoAddressVO vo) {
+		System.out.println("1.vo : " + vo);
+		if(vo.getLatitude() == 0.0) {
+			//vo.setAddress("청주그린컴퓨터");
+			vo.setLatitude(36.635110507473016);
+			vo.setLongitude(127.45959389722837);
+		}
+		System.out.println("2.vo : " + vo);
+		model.addAttribute("vo", vo);
+		return "study2/kakao/kakaoEx1";
+	}
+	
+	// Kakaomap(클릭한위치에마커표시)
+	@GetMapping("/kakao/kakaoEx2")
+	public String kakaoEx2Get() {
+		return "study2/kakao/kakaoEx2";
+	}
+	
+	// Kakaomap(클릭한위치에마커표시 DB저정하기)
+	@ResponseBody
+	@PostMapping("/kakao/kakaoEx2")
+	public int kakaoEx2Post(KakaoAddressVO vo) {
+		int res = 0;
+		KakaoAddressVO searchVO = study2Service.getKakaoAddressSearch(vo.getAddress());
+		if(searchVO == null) res = study2Service.setKakaoAddressInput(vo);
+		return res;
+	}
+	
+	// Kakaomap(검색한 장소를 DB에서 삭제하기)
+	@ResponseBody
+	@PostMapping("/kakao/kakaoAddressDelete")
+	public int kakaoAddressDeletePost(String address) {
+		return study2Service.setKakaoAddressDelete(address);
+	}
+	
+	// Kakaomap(DB에 저장된 장소 표시/이동하기)
+	@GetMapping("/kakao/kakaoEx3")
+	public String kakaoEx3Get(Model model, KakaoAddressVO vo,
+			@RequestParam(name="address", defaultValue = "", required = false) String address
+		) {
+		if(address.equals("")) {
+			vo.setAddress("청주그린컴퓨터");
+			vo.setLatitude(36.635110507473016);
+			vo.setLongitude(127.45959389722837);
+		}
+		else {
+			vo = study2Service.getKakaoAddressSearch(address);
+		}
+		
+		List<KakaoAddressVO> addressVos = study2Service.getKakaoAddressList();
+		model.addAttribute("vo", vo);
+		model.addAttribute("addressVos", addressVos);
+		
+		return "study2/kakao/kakaoEx3";
+	}
+	
+	// Kakaomap(KakaoDB에 저장된 장소 표시/이동하기)
+	@GetMapping("/kakao/kakaoEx4")
+	public String kakaoEx4Get(Model model,
+			@RequestParam(name="address", defaultValue = "", required = false) String address	
+		) {
+		model.addAttribute("address", address);
+		return "study2/kakao/kakaoEx4";
+	}
+	
+	
+
 }

@@ -12,13 +12,12 @@ public class CrimeVO {
 	private int murder;
 	private int violence;
 	
-	//총
+	private String policeZone;
+	
 	private int totRobbery;
 	private int totMurder;
 	private int totTheft;
 	private int totViolence;
-	
-	//평
 	private int avgRobbery;
 	private int avgMurder;
 	private int avgTheft;

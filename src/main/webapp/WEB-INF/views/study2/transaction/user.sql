@@ -26,7 +26,3 @@ create table user2 (
 );
 drop table user2;
 desc user2;
-select * from user2;
-
-
-

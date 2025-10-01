@@ -164,6 +164,26 @@
     	});
     }
     
+    // 리뷰 댓글 삭제하기
+    function reviewReplyDelete(replyIdx) {
+    	let ans = confirm("현 리뷰의 댓글을 삭제합니다.");
+    	if(!ans) return false;
+    	
+    	$.ajax({
+    		url  : "${ctp}/review/reviewReplyDelete",
+    		type : "post",
+    		data : {replyIdx : replyIdx},
+    		success: (res) => {
+    			if(res != 0) {
+    				alert("리뷰 댓글이 삭제되었습니다.");
+    				location.reload();
+    			}
+    			else alert("리뷰댓글 삭제 실패~~");
+    		},
+    		error : () => alert("전송 오류!")
+    	});
+    }
+    
     // 화면 끝에서 위쪽으로 부드럽게 이동하기
     $(window).scroll(function(){
     	if($(this).scrollTop() > 100) {
@@ -177,7 +197,6 @@
     		window.scrollTo({top:0, behavior: "smooth"});
     	});
     });
-    
   </script>
   <style>
     th {
@@ -216,7 +235,7 @@
       text-shadow: 0 0 0 rgba(250, 200, 0, 0.98);
     }
     
-   /* 화살표 부드럽게 위로 이동하는 CSS  */
+    /* 화살표 부드럽게 위로 이동하는 CSS(2개) */
     h6 {
       position: fixed;
       right: 1rem;
@@ -297,7 +316,7 @@
         </div>
       </fieldset>
       <div class="m-0 p-0">
-        <textarea rows="3" name="review" id="review" class="form-control mb-1" placeholder="별점 후기를 남겨주시면 100포인트를 지급합니다."></textarea>
+        <textarea rows="3" name="review" id="review" class="form-control mb-1" placeholder="별점 후기를 남겨주시면 최대 100포인트를 지급합니다."></textarea>
       </div>
       <div>
         <input type="button" value="별점/리뷰등록" onclick="reviewCheck()" class="btn btn-primary btn-sm form-control"/>
@@ -413,6 +432,6 @@
 
 <p><br/></p>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
-<h6 id="topBtn" class="text-end me-3"><img src="${ctp}/images/Top.gif" title="위로이동"/></h6>
+<h6 id="topBtn" class="text-end me-3"><img src="${ctp}/images/arrowTop.gif" title="위로이동"/></h6>
 </body>
 </html>

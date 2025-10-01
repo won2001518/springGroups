@@ -30,6 +30,14 @@
 	  where year=#{year} and police like concat(#{policeZone},'%')
 	  order by year, police;
 	</select>
+	
+	<select id="getKakaoAddressSearch" resultType="com.spring.springGroupS.vo.KakaoAddressVO">
+		select * from kakaoAddress where address = #{address};
+	</select>
+	
+	<select id="getKakaoAddressList" resultType="com.spring.springGroupS.vo.KakaoAddressVO">
+		select * from kakaoAddress order by address;
+	</select>
 
 
 
@@ -54,6 +62,11 @@
   	insert into crime values (default,#{vo.year},#{vo.police},#{vo.robbery},#{vo.theft},#{vo.murder},#{vo.violence});
   </insert>
   
+  <insert id="setKakaoAddressInput">
+    insert into kakaoAddress values (default,#{vo.address},#{vo.latitude},#{vo.longitude});
+  </insert>
+  
+  
   
   <delete id="setValidatorDeleteOk">
     delete from user where idx = #{idx};
@@ -61,6 +74,10 @@
   
   <delete id="setDeleteCrimeCheck">
     delete from crime where year = #{year};
+  </delete>
+  
+  <delete id="setKakaoAddressDelete">
+    delete from kakaoAddress where address = #{address};
   </delete>
   
   

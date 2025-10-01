@@ -20,4 +20,6 @@ select year,
   from crime 
   where year=2024 and police like '서울%'
   order by year, police;
-
+  
+  
+  

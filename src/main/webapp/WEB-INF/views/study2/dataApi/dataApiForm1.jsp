@@ -11,7 +11,7 @@
   <script>
     'use strict';
     
-    const API_KEY = "c72436bafd0150f13f93d0ab695a4270f87d8b3a444fe8378f3c557a0d5585d8";
+    const API_KEY = "7WMGwpEENfXvFnxY1efwZ4263gPHczyuehE7RyufhGeO4SZPOKxDisyWglB%2BjylPIXZJu8Xxs8BCWVbLqr9PdA%3D%3D";
     
     async function crimeCheck() {
     	let year = $("#year").val();
@@ -247,7 +247,7 @@
 	      <option ${policeZone=='제주' ? 'selected' : ''}>제주</option>
 	    </select>
 	    <!-- <input type="button" value="년도/경찰서별출력" onclick="yearPoliceCheck()" class="btn btn-secondary mr-2" /> -->
-	    <input type="submit" value="년도/경찰서별출력" onclick="yearPoliceCheck()" class="btn btn-secondary mr-2" />
+	    <input type="submit" value="년도/경찰서별출력" class="btn btn-secondary mr-2" />
 		</div>
   </form>
   <hr class="border-1 border-dark">

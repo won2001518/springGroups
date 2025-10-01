@@ -26,12 +26,11 @@
     	let fileLength = document.getElementById("fName").files.length;
     	
     	for(let i=0; i<fileLength; i++) {
-    		fileSize += document.getElementById("fName").files[i].size;
-    		fName += document.getElementById("fName").files[i].name;
+    		fName = document.getElementById("fName").files[i].name;
     		ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
     		if(ext != 'jpg' && ext != 'gif' && ext != 'png' && ext != 'zip' && ext != 'hwp' && ext != 'doc' && ext != 'ppt' && ext != 'pptx' && ext != 'pdf' && ext != 'txt') {
-        	alert("업로드 가능한 파일은 'jpg/gif/png/zip/hwp/doc/ppt/pptx/pdf/txt'파일 입니다.");
-        }
+       		alert("업로드 가능한 파일은 'jpg/gif/png/zip/hwp/doc/ppt/pptx/pdf/txt'파일 입니다.");
+       	}
     		fileSize += document.getElementById("fName").files[i].size;
     	}
     	
@@ -59,7 +58,7 @@
     </div>
     <div class="input-group mb-3">
       <input type="file" name="fName" id="fName" multiple class="form-control" accept=".jpg,.gif,.png,.zip,.ppt,.pptx,.hwp,.hwpx,.doc,.pdf,.txt"/>
-      <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success"/>
+      <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-primary"/>
     </div>
   </form>
   <hr/>

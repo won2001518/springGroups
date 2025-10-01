@@ -11,7 +11,7 @@ create table pds2 (
   title   varchar(100) not null,		/* 업로드 되는 파일의 간단 제목 */
   content text,											/* 업로드 되는 파일의 상세 제목 */
   openSw	char(3)	default '공개',		/* 파일 공개여부(공개/비공개) */
-  /* pwd     varchar(100), */							/* 비밀번호(SHA256) */
+  /* pwd     varchar(100),	*/						/* 비밀번호(SHA256) */
   hostIp	varchar(30) not null,			/* 파일 업로드한 PC IP */
   fDate		datetime default now(),		/* 파일 업로드한 날짜 */
   downNum	int default 0,						/* 다운 받은 횟수 */
@@ -19,5 +19,6 @@ create table pds2 (
   foreign key(mid) references member(mid)
 );
 
-desc pds2;
-drop table pds2;
+desc pds;
+
+

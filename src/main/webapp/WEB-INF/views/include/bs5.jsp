@@ -7,5 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
-<!-- <script src="https://kit.fontawesome.com/fa3667321f.js" crossorigin="anonymous"></script> -->
-<script src="https://kit.fontawesome.com/df66332deb.js" crossorigin="anonymous"></script>
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"> -->
+<script src="https://kit.fontawesome.com/fa3667321f.js" crossorigin="anonymous"></script>
+<!-- <script src="https://kit.fontawesome.com/df66332deb.js" crossorigin="anonymous"></script> -->
+

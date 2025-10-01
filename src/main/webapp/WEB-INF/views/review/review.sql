@@ -42,3 +42,6 @@ select * from review v, reviewReply r where part='pds' and v.partIdx=10 and v.id
 select * from review v inner join reviewReply r on part='pds' and v.partIdx=10 and v.idx=r.reviewIdx;
 
 select * from review v left join reviewReply r on part='pds' and v.partIdx=10 and v.idx=r.reviewIdx;
+
+select * from (select * from review where partIdx=11) v left join reviewReply r 
+  on part='pds' and v.partIdx=11 and v.idx=r.reviewIdx;

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
-a {text-decoration:none}
+a {text-decoration: none}
 a:hover {
 	color: orange;
-	text-decoration: underline
+	text-decoration: underline;
 }

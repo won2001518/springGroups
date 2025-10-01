@@ -42,7 +42,7 @@
 		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 	
-	<!-- transaction(트랜재셕) 어노테이션 처리를 위한 빈 추가 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!-- Transaction(트랜잭션) 어노테이션 처리를 위한 빈 추가 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 </beans:beans>
